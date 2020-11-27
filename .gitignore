@@ -1,0 +1,7 @@
+*~
+.*.swp
+.DS_Store
+*.o
+scores.py
+534400.json
+downloader/download
