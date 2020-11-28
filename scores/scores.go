@@ -99,7 +99,6 @@ func main() {
 	}
 
 	for _, n := range memberNumbers {
-		// ts, err := strconv.ParseInt(s.Members[n].LastStarTs, 10, 64)
 		ts := StarTsValue(s.Members[n].LastStarTs)
 		if ts == 0 {
 			fmt.Printf("%20s did not complete any stars\n", s.Members[n].Name)
@@ -124,8 +123,8 @@ func fmtDuration(d time.Duration) string {
 	m := d / time.Minute
 
 	if h > 0 {
-		return fmt.Sprintf("%2d h %2d m", h, m)
+		return fmt.Sprintf("%4d h %2d m", h, m)
 	} else {
-		return fmt.Sprintf("     %2d m", m)
+		return fmt.Sprintf("       %2d m", m)
 	}
 }
