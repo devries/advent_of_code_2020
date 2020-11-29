@@ -80,3 +80,31 @@ func TestPoint(t *testing.T) {
 		t.Errorf("North + South should be 0,0")
 	}
 }
+
+func TestPermutations(t *testing.T) {
+	a := []int{1, 2, 3}
+
+	perms := [][]int{
+		[]int{1, 2, 3},
+		[]int{2, 1, 3},
+		[]int{3, 1, 2},
+		[]int{1, 3, 2},
+		[]int{2, 3, 1},
+		[]int{3, 2, 1},
+	}
+
+	for r := range IntPermutations(a) {
+		for i, r2 := range perms {
+			if r[0] == r2[0] && r[1] == r2[1] && r[2] == r2[2] {
+				perms[i] = perms[len(perms)-1]
+				perms[len(perms)-1] = nil
+				perms = perms[:len(perms)-1]
+				break
+			}
+		}
+	}
+
+	if len(perms) > 0 {
+		t.Errorf("Not all permutations of %v were found", a)
+	}
+}
