@@ -1,5 +1,9 @@
 package utils
 
+import (
+	"fmt"
+)
+
 // Greatest Common Denominator
 func Gcd(a, b int64) int64 {
 	for b != 0 {
@@ -23,4 +27,11 @@ func CountBits(n uint32) int {
 	}
 
 	return count
+}
+
+// Check if error is not nil and panic with message if it is.
+func Check(e error, message string) {
+	if e != nil {
+		panic(fmt.Errorf("%s: %s", message, e))
+	}
 }

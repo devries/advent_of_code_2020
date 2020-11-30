@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -107,4 +108,18 @@ func TestPermutations(t *testing.T) {
 	if len(perms) > 0 {
 		t.Errorf("Not all permutations of %v were found", a)
 	}
+}
+
+func TestCheck(t *testing.T) {
+	Check(nil, "test no error") // This should not panic
+
+	defer func() {
+		if r := recover(); r == nil {
+			t.Errorf("The Check function did not panic")
+		}
+	}()
+
+	err := fmt.Errorf("generic error")
+
+	Check(err, "test error")
 }
