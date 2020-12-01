@@ -75,8 +75,8 @@ func main() {
 		if dayStart.After(now) {
 			break
 		}
-		fmt.Printf("Day %d:\n", i)
 		for _, j := range []int{1, 2} {
+			fmt.Printf("Day %2d part %d:\n", i, j)
 			for _, n := range memberNumbers {
 				completions, ok := s.Members[n].CompletionDayLevel[i]
 				if !ok {
@@ -92,8 +92,9 @@ func main() {
 				doneAt := time.Unix(ts, 0)
 				dur := doneAt.Sub(dayStart)
 
-				fmt.Printf("%20s: %d: %s\n", s.Members[n].Name, j, fmtDuration(dur))
+				fmt.Printf("%25s: %s\n", s.Members[n].Name, fmtDuration(dur))
 			}
+			fmt.Printf("\n")
 		}
 		fmt.Printf("\n")
 	}
