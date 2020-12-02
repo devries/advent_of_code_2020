@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"sort"
 	"strconv"
 	"time"
 )
@@ -43,6 +44,23 @@ func StarTsValue(sts StarTs) int64 {
 	}
 }
 
+type UserSortable struct {
+	Name   string
+	Stars  int
+	Finish int64
+}
+
+type ByScore []UserSortable
+
+func (a ByScore) Len() int      { return len(a) }
+func (a ByScore) Swap(i, j int) { a[i], a[j] = a[j], a[i] }
+func (a ByScore) Less(i, j int) bool {
+	if a[i].Stars != a[j].Stars {
+		return a[i].Stars > a[j].Stars
+	}
+	return a[i].Finish < a[j].Finish
+}
+
 func main() {
 	if len(os.Args) != 2 {
 		fmt.Fprintf(os.Stderr, "Usage: %s <scorefile>\n", os.Args[0])
@@ -77,6 +95,7 @@ func main() {
 		}
 		for _, j := range []int{1, 2} {
 			fmt.Printf("Day %2d part %d:\n", i, j)
+			users := []UserSortable{}
 			for _, n := range memberNumbers {
 				completions, ok := s.Members[n].CompletionDayLevel[i]
 				if !ok {
@@ -89,26 +108,38 @@ func main() {
 
 				ts, err := strconv.ParseInt(completion.GetStarTs, 10, 64)
 				check(err)
-				doneAt := time.Unix(ts, 0)
+				users = append(users, UserSortable{s.Members[n].Name, 1, ts})
+			}
+			sort.Sort(ByScore(users))
+			for _, u := range users {
+				doneAt := time.Unix(u.Finish, 0)
 				dur := doneAt.Sub(dayStart)
 
-				fmt.Printf("%25s: %s\n", s.Members[n].Name, fmtDuration(dur))
+				fmt.Printf("%25s: %s\n", u.Name, fmtDuration(dur))
 			}
 			fmt.Printf("\n")
 		}
 		fmt.Printf("\n")
 	}
 
+	users := []UserSortable{}
 	for _, n := range memberNumbers {
 		ts := StarTsValue(s.Members[n].LastStarTs)
 		if ts == 0 {
-			fmt.Printf("%20s did not complete any stars\n", s.Members[n].Name)
+			users = append(users, UserSortable{s.Members[n].Name, 0, 0})
 		} else {
-			finished := time.Unix(ts, 0)
-			fmt.Printf("%20s finished %d starts on %s\n", s.Members[n].Name, s.Members[n].Stars, finished.Format("January 2, 2006 at 03:04 PM"))
+			users = append(users, UserSortable{s.Members[n].Name, s.Members[n].Stars, ts})
 		}
 	}
-
+	sort.Sort(ByScore(users))
+	for _, u := range users {
+		if u.Stars == 0 {
+			fmt.Printf("%20s did not complete any stars\n", u.Name)
+		} else {
+			finished := time.Unix(u.Finish, 0)
+			fmt.Printf("%20s finished %d starts on %s\n", u.Name, u.Stars, finished.Format("January 2, 2006 at 03:04 PM"))
+		}
+	}
 }
 
 func check(e error) {
