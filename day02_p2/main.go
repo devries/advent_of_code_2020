@@ -48,9 +48,7 @@ func validPassword(entry string) (bool, error) {
 
 	passchars := []rune(password)
 
-	if passchars[p1-1] == coi && passchars[p2-1] != coi {
-		return true, nil
-	} else if passchars[p1-1] != coi && passchars[p2-1] == coi {
+	if (passchars[p1-1] == coi) != (passchars[p2-1] == coi) {
 		return true, nil
 	} else {
 		return false, nil
