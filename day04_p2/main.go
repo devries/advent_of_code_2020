@@ -101,19 +101,20 @@ func checkHeight(input string) bool {
 		return false
 	}
 
-	if ending == "cm" {
+	switch ending {
+	case "cm":
 		if number >= 150 && number <= 193 {
 			return true
 		} else {
 			return false
 		}
-	} else if ending == "in" {
+	case "in":
 		if number >= 59 && number <= 76 {
 			return true
 		} else {
 			return false
 		}
-	} else {
+	default:
 		return false
 	}
 }
