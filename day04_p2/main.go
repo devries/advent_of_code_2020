@@ -124,14 +124,15 @@ func checkHairColor(input string) bool {
 }
 
 func checkEyeColor(input string) bool {
-	values := make(map[string]bool)
-	values["amb"] = true
-	values["blu"] = true
-	values["brn"] = true
-	values["gry"] = true
-	values["grn"] = true
-	values["hzl"] = true
-	values["oth"] = true
+	values := map[string]bool{
+		"amb": true,
+		"blu": true,
+		"brn": true,
+		"gry": true,
+		"grn": true,
+		"hzl": true,
+		"oth": true,
+	}
 
 	return values[input]
 }
