@@ -36,36 +36,19 @@ func getSeatId(boardingPass string) (int, error) {
 		return 0, fmt.Errorf("the boarding pass %s is not the proper length", boardingPass)
 	}
 
-	rowCode := pass[:7]
-	seatCode := pass[7:]
+	// Originally I calculated the row and column separately, but that is not necessary
+	id := 0
 
-	row := 0
-
-	for _, code := range rowCode {
-		row <<= 1
+	for _, code := range pass {
+		id <<= 1
 		switch code {
-		case 'B':
-			row |= 1
-		case 'F':
-			row |= 0
+		case 'B', 'R':
+			id |= 1
+		case 'F', 'L':
+			id |= 0
 		default:
-			return 0, fmt.Errorf("unexpected row code %c found in %s", code, boardingPass)
+			return 0, fmt.Errorf("unexpected character %c found in %s", code, boardingPass)
 		}
 	}
-
-	seat := 0
-
-	for _, code := range seatCode {
-		seat <<= 1
-		switch code {
-		case 'R':
-			seat |= 1
-		case 'L':
-			seat |= 0
-		default:
-			return 0, fmt.Errorf("unexpected seat code %c found in %s", code, boardingPass)
-		}
-	}
-
-	return row*8 + seat, nil
+	return id, nil
 }
