@@ -2,6 +2,7 @@ package utils
 
 import (
 	"fmt"
+	"strings"
 	"testing"
 )
 
@@ -122,4 +123,20 @@ func TestCheck(t *testing.T) {
 	err := fmt.Errorf("generic error")
 
 	Check(err, "test error")
+}
+
+func TestReadLines(t *testing.T) {
+	test := struct {
+		Input  string
+		Output []string
+	}{"one\ntwo\nthree\n", []string{"one", "two", "three"}}
+
+	r := strings.NewReader(test.Input)
+	result := ReadLines(r)
+
+	for i, v := range result {
+		if v != test.Output[i] {
+			t.Errorf("Expected %v, got %v", test.Output, result)
+		}
+	}
 }

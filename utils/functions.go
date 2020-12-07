@@ -1,7 +1,9 @@
 package utils
 
 import (
+	"bufio"
 	"fmt"
+	"io"
 )
 
 // Greatest Common Denominator
@@ -34,4 +36,19 @@ func Check(e error, message string) {
 	if e != nil {
 		panic(fmt.Errorf("%s: %s", message, e))
 	}
+}
+
+// Read all lines from reader. Panic if there is an issue
+func ReadLines(r io.Reader) []string {
+	result := []string{}
+
+	scanner := bufio.NewScanner(r)
+	for scanner.Scan() {
+		line := scanner.Text()
+		result = append(result, line)
+	}
+	err := scanner.Err()
+	Check(err, "error reading lines")
+
+	return result
 }
