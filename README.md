@@ -1,6 +1,6 @@
 # Advent of Code 2020
 
-[![Test Status](https://https://github.com/devries/advent_of_code_2020/workflows/Tests/badge.svg)](https://github.com/devries/advent_of_code_2020/devries/actions)
+[![Test Status](https://github.com/devries/advent_of_code_2020/workflows/Tests/badge.svg)](https://github.com/devries/advent_of_code_2020/actions)
 
 ## Index
 
