@@ -1,5 +1,7 @@
 # Advent of Code 2020
 
+[![Test Status](https://https://github.com/devries/advent_of_code_2020/workflows/Tests/badge.svg)](https://github.com/devries/advent_of_code_2020/devries/actions)
+
 ## Index
 
 - [Day 1: Report Repair](https://adventofcode.com/2020/day/1) - [part 1](day01_p1), [part 2](day01_p2)
