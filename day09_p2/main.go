@@ -103,12 +103,11 @@ func findExtrema(sequence []int64) (int64, int64) {
 	min := sequence[0]
 	max := sequence[0]
 
-	for i := 1; i < len(sequence); i++ {
-		if sequence[i] < min {
-			min = sequence[i]
-		}
-		if sequence[i] > max {
-			max = sequence[i]
+	for _, v := range sequence {
+		if v < min {
+			min = v
+		} else if v > max {
+			max = v
 		}
 	}
 	return min, max
