@@ -10,5 +10,6 @@
 - [Day 4: Passport Processing](https://adventofcode.com/2020/day/4) - [part 1](day04_p1), [part 2](day04_p2)
 - [Day 5: Binary Boarding](https://adventofcode.com/2020/day/5) - [part 1](day05_p1), [part 2](day05_p2)
 - [Day 6: Custom Customs](https://adventofcode.com/2020/day/6) - [part 1](day06_p1), [part 2](day06_p2), [part 2 refactor](day06_p2alt)
-- [Day 7: Handy Haversacks](https://adventofcode.com/2020/day/7) - [part 1](day07_p1), [part 2](day07_p2), [part 1 refactor](day07_p1alt)
+- [Day 7: Handy Haversacks](https://adventofcode.com/2020/day/7) - [part 1](day07_p1), [part 2](day07_p2), [part 1 refactor](day07_p1alt), [part 2 refactor](day07_p2alt)
 - [Day 8: Handheld Halting](https://adventofcode.com/2020/day/8) - [part 1](day08_p1), [part 2](day08_p2)
+- [Day 9: Encoding Error](https://adventofcode.com/2020/day/9) - [part 1](day09_p1), [part 2](day09_p2)
