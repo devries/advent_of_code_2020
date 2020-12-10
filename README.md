@@ -13,3 +13,4 @@
 - [Day 7: Handy Haversacks](https://adventofcode.com/2020/day/7) - [part 1](day07_p1), [part 2](day07_p2), [part 1 refactor](day07_p1alt), [part 2 refactor](day07_p2alt)
 - [Day 8: Handheld Halting](https://adventofcode.com/2020/day/8) - [part 1](day08_p1), [part 2](day08_p2)
 - [Day 9: Encoding Error](https://adventofcode.com/2020/day/9) - [part 1](day09_p1), [part 2](day09_p2)
+- [Day 10: Adapter Array](https://adventofcode.com/2020/day/10) - [part 1](day10_p1), [part 2](day10_p2)
