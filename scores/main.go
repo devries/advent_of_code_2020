@@ -79,8 +79,13 @@ func main() {
 
 	// Print out daily results for each member
 	memberNumbers := []int{}
+	maxNameLength := 0
 	for k, _ := range s.Members {
 		memberNumbers = append(memberNumbers, k)
+		nameLength := len(s.Members[k].Name)
+		if nameLength > maxNameLength {
+			maxNameLength = nameLength
+		}
 	}
 
 	eventYear, err := strconv.ParseInt(s.Event, 10, 64)
@@ -115,7 +120,7 @@ func main() {
 				doneAt := time.Unix(u.Finish, 0)
 				dur := doneAt.Sub(dayStart)
 
-				fmt.Printf("%25s: %s\n", u.Name, fmtDuration(dur))
+				fmt.Printf("%[1]*[2]s: %[3]s\n", maxNameLength+4, u.Name, fmtDuration(dur))
 			}
 			fmt.Printf("\n")
 		}
@@ -134,10 +139,10 @@ func main() {
 	sort.Sort(ByScore(users))
 	for _, u := range users {
 		if u.Stars == 0 {
-			fmt.Printf("%20s did not complete any stars\n", u.Name)
+			fmt.Printf("%[1]*[2]s did not complete any stars\n", maxNameLength, u.Name)
 		} else {
 			finished := time.Unix(u.Finish, 0)
-			fmt.Printf("%20s finished %d starts on %s\n", u.Name, u.Stars, finished.Format("January 2, 2006 at 03:04 PM"))
+			fmt.Printf("%[1]*[2]s finished %[3]d starts on %[4]s\n", maxNameLength, u.Name, u.Stars, finished.Format("January 2, 2006 at 03:04 PM"))
 		}
 	}
 }
