@@ -124,6 +124,29 @@ func main() {
 			}
 			fmt.Printf("\n")
 		}
+		// Write time from p1 to p2
+		users := []UserSortable{}
+		for _, n := range memberNumbers {
+			if completions, ok := s.Members[n].CompletionDayLevel[i]; ok {
+				if completion2, ok := completions[2]; ok {
+					completion1 := completions[1]
+
+					ts2, err := strconv.ParseInt(completion2.GetStarTs, 10, 64)
+					check(err)
+					ts1, err := strconv.ParseInt(completion1.GetStarTs, 10, 64)
+					check(err)
+					users = append(users, UserSortable{s.Members[n].Name, 1, ts2 - ts1})
+				}
+			}
+		}
+		fmt.Printf("Day %2d time between parts:\n", i)
+		sort.Sort(ByScore(users))
+		for _, u := range users {
+			d := time.Duration(u.Finish) * time.Second
+			fmt.Printf("%[1]*[2]s: %[3]s\n", maxNameLength+4, u.Name, fmtDuration(d))
+		}
+		fmt.Printf("\n")
+
 		fmt.Printf("\n")
 	}
 
