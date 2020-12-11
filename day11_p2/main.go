@@ -4,11 +4,16 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"time"
 
 	"github.com/devries/advent_of_code_2020/utils"
+	"github.com/spf13/pflag"
 )
 
+var visualizer = pflag.BoolP("visualize", "v", false, "enable visualization")
+
 func main() {
+	pflag.Parse()
 	f, err := os.Open("input.txt")
 	utils.Check(err, "error opening input")
 	defer f.Close()
@@ -29,6 +34,10 @@ func solve(seats map[utils.Point]rune) int {
 
 	generations := 0
 	for {
+		if *visualizer {
+			printMap(seats)
+			time.Sleep(200 * time.Millisecond)
+		}
 		changes := 0
 		nextGeneration := make(map[utils.Point]rune)
 		for pos, val := range seats {
@@ -127,8 +136,20 @@ func parseInput(r io.Reader) map[utils.Point]rune {
 }
 
 func printMap(seats map[utils.Point]rune) {
-	for j := 0; j < 10; j++ {
-		for i := 0; i < 10; i++ {
+	xmax := 0
+	ymax := 0
+	for p, _ := range seats {
+		if p.X > xmax {
+			xmax = p.X
+		}
+		if p.Y > ymax {
+			ymax = p.Y
+		}
+	}
+
+	fmt.Printf("\033[3J\033[H")
+	for j := 0; j <= ymax; j++ {
+		for i := 0; i <= xmax; i++ {
 			v := seats[utils.Point{i, j}]
 			if v == 0 {
 				fmt.Printf(".")
@@ -138,5 +159,4 @@ func printMap(seats map[utils.Point]rune) {
 		}
 		fmt.Printf("\n")
 	}
-	fmt.Printf("\n--\n")
 }
