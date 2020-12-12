@@ -15,3 +15,4 @@
 - [Day 9: Encoding Error](https://adventofcode.com/2020/day/9) - [part 1](day09_p1), [part 2](day09_p2)
 - [Day 10: Adapter Array](https://adventofcode.com/2020/day/10) - [part 1](day10_p1), [part 2](day10_p2)
 - [Day 11: Seating System](https://adventofcode.com/2020/day/11) - [part 1](day11_p1), [part 2](day11_p2)
+- [Day 12: Rain Risk](https://adventofcode.com/2020/day/12) - [part 1](day12_p1), [part 2](day12_p2)
