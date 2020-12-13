@@ -73,7 +73,7 @@ func parseBusses(schedule string) map[int64]int64 {
 		}
 		val, err := strconv.ParseInt(bus, 10, 64)
 		utils.Check(err, "Error parsing bus id")
-		if i == 0 {
+		if int64(i)%val == 0 {
 			busses[val] = 0
 		} else {
 			busses[val] = val - int64(i)%val
