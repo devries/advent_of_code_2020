@@ -80,11 +80,13 @@ func eliminate(p []map[string]bool) []string {
 	finals := make([]string, len(p))
 
 	for {
+		stillEliminating := false
 		for i, isDone := range done {
 			if isDone {
 				continue
 			}
 			if len(p[i]) == 1 {
+				stillEliminating = true
 				for k, _ := range p[i] {
 					finals[i] = k
 				}
@@ -95,6 +97,9 @@ func eliminate(p []map[string]bool) []string {
 				}
 				done[i] = true
 			}
+		}
+		if !stillEliminating {
+			utils.Check(fmt.Errorf("Unable to eliminate any possibilities"), "error in elimination")
 		}
 
 		loopComplete := true
