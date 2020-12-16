@@ -19,3 +19,4 @@
 - [Day 13: Shuttle Search](https://adventofcode.com/2020/day/13) - [part 1](day13_p1), [part 2](day13_p2)
 - [Day 14: Docking Data](https://adventofcode.com/2020/day/14) - [part 1](day14_p1), [part 2](day14_p2)
 - [Day 15: Rambunctious Recitation](https://adventofcode.com/2020/day/15) - [part 1](day15_p1), [part 2](day15_p2)
+- [Day 16: Ticket Translation](https://adventofcode.com/2020/day/16) - [part 1](day16_p1), [part 2](day16_p2)
