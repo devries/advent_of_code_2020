@@ -45,19 +45,16 @@ func solve(r io.Reader) int64 {
 	}
 
 	for k, v := range rsmap {
-		valid := make([]bool, len(myTicket))
-		for i, _ := range valid {
-			valid[i] = true
-		}
-		for _, tick := range goodTickets {
-			for i, num := range tick {
-				if !rangesContain(v, num) {
-					valid[i] = false
+		for i := range myTicket {
+			valid := true
+			for _, tick := range goodTickets {
+				if !rangesContain(v, tick[i]) {
+					valid = false
+					break
 				}
 			}
-		}
-		for i, vld := range valid {
-			if vld {
+
+			if valid {
 				possibilities[i][k] = true
 			}
 		}
