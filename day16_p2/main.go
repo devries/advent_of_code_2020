@@ -83,15 +83,19 @@ func eliminate(p []map[string]bool) []string {
 				continue
 			}
 			if len(p[i]) == 1 {
+				// We are going to eliminate the index with one possible solution
 				stillEliminating = true
+				// Get the only key
 				for k, _ := range p[i] {
 					finals[i] = k
 				}
+				// Delete key from all other possibilities
 				for j, otherDone := range done {
 					if j != i && otherDone == false {
 						delete(p[j], finals[i])
 					}
 				}
+				// Mark this index as done
 				done[i] = true
 			}
 		}
@@ -99,20 +103,22 @@ func eliminate(p []map[string]bool) []string {
 			utils.Check(fmt.Errorf("Unable to eliminate any possibilities"), "error in elimination")
 		}
 
-		loopComplete := true
-		for _, isDone := range done {
-			if isDone == false {
-				loopComplete = false
-				break
-			}
-		}
-
-		if loopComplete {
+		if loopComplete := containsBool(done, false); !loopComplete {
 			break
 		}
 	}
 
 	return finals
+}
+
+func containsBool(s []bool, v bool) bool {
+	for _, a := range s {
+		if a == v {
+			return true
+		}
+	}
+
+	return false
 }
 
 func cullInvalid(rs []Range, tickets [][]int) [][]int {
