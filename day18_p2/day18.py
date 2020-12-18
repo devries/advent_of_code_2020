@@ -74,7 +74,7 @@ def infix_to_postfix(tokens):
         elif tok=='+':
             while opstack:
                 v = opstack.pop()
-                if v=='(' or v=='*': # Pop everything of higher presidence onto the stack,
+                if v=='(' or v=='*': # Pop everything of higher presidence onto output,
                                      # Multiply is lower presidence
                     opstack.append(v)
                     break
