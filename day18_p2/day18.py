@@ -8,6 +8,11 @@ samples = ['1 + 2 * 3 + 4 * 5 + 6',
         '5 * 9 * (7 * 3 * 3 + 9 * 3 + (8 + 6 * 4))',
         '((2 + 4 * 9) * (6 + 9 * 8 + 6) + 6) + 2 + 4 * 2']
 
+smallsleep = 0.5
+bigsleep = 1.0
+
+steps = 0
+
 def main():
     #for s in samples:
     #    t = tokenize(s)
@@ -55,6 +60,9 @@ def tokenize(statement):
     return tokens
 
 def infix_to_postfix(tokens, total):
+    global smallsleep
+    global bigsleep
+    global steps
     opstack = []
     output = []
 
@@ -68,7 +76,7 @@ def infix_to_postfix(tokens, total):
         print("Postfix Form: "+poutput)
         print("Op Stack:     "+pstack)
         print("Statement:    "+ptok)
-        time.sleep(0.01)
+        time.sleep(smallsleep)
         if isinstance(tok, int):
             output.append(tok)
         elif tok=='(':
@@ -109,7 +117,15 @@ def infix_to_postfix(tokens, total):
     print("Postfix Form: "+poutput)
     print("Op Stack:     "+pstack)
     print("Statement:")
-    time.sleep(0.1)
+    time.sleep(bigsleep)
+
+    steps+=1
+    if steps>=3:
+        smallsleep=0.01
+        bigsleep=0.1
+    elif steps>=1:
+        smallsleep=0.1
+        bigsleep=0.2
 
     return output
 
