@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import time
 
 samples = ['1 + 2 * 3 + 4 * 5 + 6',
         '1 + (2 * 3) + (4 * (5 + 6))',
@@ -15,13 +16,18 @@ def main():
     with open('input.txt','r') as f:
         lines = [l.strip() for l in f.readlines()]
 
-    sum = 0
+    total = 0
     for l in lines:
         t = tokenize(l)
-        pf = infix_to_postfix(t)
-        sum+=eval_postfix(pf)
+        print('\033[2J')
+        print('\033[3J\033[H')
+        pf = infix_to_postfix(t, total)
+        result = eval_postfix(pf)
+        total+=result
+        detok = ' '.join(str(v) for v in pf)
+        #print(f'{l} = {detok} = {result}')
 
-    print(sum)
+    print(total)
 
 def tokenize(statement):
     tokens = []
@@ -48,11 +54,21 @@ def tokenize(statement):
 
     return tokens
 
-def infix_to_postfix(tokens):
+def infix_to_postfix(tokens, total):
     opstack = []
     output = []
 
-    for tok in tokens:
+    for p, tok in enumerate(tokens):
+        print('\033[2J')
+        print('\033[3J\033[H')
+        poutput = ' '.join(str(o) for o in output)
+        pstack = ' '.join(str(s) for s in opstack)
+        ptok = ' '.join(str(t) for t in tokens[p:])
+        print("Total:        "+str(total))
+        print("Postfix Form: "+poutput)
+        print("Op Stack:     "+pstack)
+        print("Statement:    "+ptok)
+        time.sleep(0.01)
         if isinstance(tok, int):
             output.append(tok)
         elif tok=='(':
@@ -83,6 +99,17 @@ def infix_to_postfix(tokens):
 
     while opstack:
         output.append(opstack.pop())
+
+    print('\033[2J')
+    print('\033[3J\033[H')
+    poutput = ' '.join(str(o) for o in output)
+    pstack = ' '.join(str(s) for s in opstack)
+    ptok = ' '.join(str(t) for t in tokens[p:])
+    print("Total:        "+str(total))
+    print("Postfix Form: "+poutput)
+    print("Op Stack:     "+pstack)
+    print("Statement:")
+    time.sleep(0.1)
 
     return output
 
