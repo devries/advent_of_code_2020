@@ -239,6 +239,8 @@ func main() {
 	for _, f := range []Transform{rotateRight, rotateRight, rotateRight, flipPhoto, rotateRight, rotateRight, rotateRight, rotateRight} {
 		found := findMonsterInPhoto(fullPhoto, monsterImage, width, height)
 		if found != 0 {
+			highlightMonsterInPhoto(fullPhoto, monsterImage, width, height)
+			printPhoto(fullPhoto)
 			fmt.Println(hashesInImage - found*hashesInMonster)
 			break
 		}
@@ -265,6 +267,25 @@ func findMonsterInPhoto(photo map[utils.Point]rune, monsterImage map[utils.Point
 	}
 
 	return found
+}
+
+func highlightMonsterInPhoto(photo map[utils.Point]rune, monsterImage map[utils.Point]rune, width int, height int) {
+	for i := 0; i < width; i++ {
+		for j := 0; j < height; j++ {
+			isFound := true
+			for pt := range monsterImage {
+				if photo[utils.Point{i + pt.X, j + pt.Y}] != '#' {
+					isFound = false
+					break
+				}
+			}
+			if isFound {
+				for pt := range monsterImage {
+					photo[utils.Point{i + pt.X, j + pt.Y}] = 'R'
+				}
+			}
+		}
+	}
 }
 
 func parseInput(r io.Reader) map[int]map[utils.Point]rune {
@@ -416,7 +437,12 @@ func printPhoto(photo map[utils.Point]rune) {
 
 	for j := 0; j < maxY; j++ {
 		for i := 0; i < maxX; i++ {
-			fmt.Printf("%c", photo[utils.Point{i, j}])
+			r := photo[utils.Point{i, j}]
+			if r == 'R' {
+				fmt.Printf("\u001b[35m#\u001b[0m")
+			} else {
+				fmt.Printf("%c", r)
+			}
 		}
 		fmt.Printf("\n")
 	}
