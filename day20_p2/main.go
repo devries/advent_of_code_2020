@@ -439,7 +439,7 @@ func printPhoto(photo map[utils.Point]rune) {
 		for i := 0; i < maxX; i++ {
 			r := photo[utils.Point{i, j}]
 			if r == 'R' {
-				fmt.Printf("\u001b[35m#\u001b[0m")
+				fmt.Printf("\033[35;1m#\033[0m")
 			} else {
 				fmt.Printf("%c", r)
 			}
