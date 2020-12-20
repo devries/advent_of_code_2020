@@ -23,69 +23,93 @@ func main() {
 		}
 	}
 	fmt.Println(sum)
+
 }
 
 func solve(message []byte, rules map[string]Rule) bool {
-	r := match(message, rules["0"], rules)
-
-	if r[0] == len(message) {
+	r := matchLengths(message, "0", rules)
+	if len(r) > 0 && r[0] == len(message) {
 		return true
 	}
 	return false
 }
 
-func match(message []byte, rule Rule, rules map[string]Rule) []int {
-	// Single byte matches value
-	if message[0] == rule.Value {
-		return []int{1}
+func matchLengths(message []byte, ruleName string, rules map[string]Rule) []int {
+	// Message is empty
+	if len(message) == 0 {
+		return []int{}
 	}
 
-	if rule.Value == 0 {
-		// Match subrules
+	rule := rules[ruleName]
 
-		// Loop through possible matches {
-		allPositions := []int{}
-		for _, sequence := range rule.Options {
-			// For each ruleset loop through sequence of rules recording
-			// starting position of each
-			positions := []int{0}
-			for _, ruleName := range sequence {
-				newPositions := []int{}
-				for _, pos := range positions {
-					subpos := match(message[pos:], rules[ruleName], rules)
-					for _, newpos := range subpos {
-						newPositions = append(newPositions, newpos+pos)
-					}
-				}
-				if len(newPositions) == 0 {
-					break
-				}
-				positions = newPositions
-			}
-			allPositions = append(allPositions, positions...)
-		}
-
-		if len(allPositions) == 0 {
+	// This rule is a byte, see if it matches
+	if rule.Value != 0 {
+		if message[0] == rule.Value {
+			return []int{1}
+		} else {
 			return []int{}
 		}
-		// Sort in descending order
-		sort.Sort(sort.Reverse(sort.IntSlice(allPositions)))
-
-		// Remove duplicates
-		prev := allPositions[0]
-		dedup := []int{prev}
-		for i := 1; i < len(allPositions); i++ {
-			v := allPositions[i]
-			if v != prev {
-				dedup = append(dedup, v)
-				prev = v
-			}
-		}
-
-		return dedup
 	}
 
-	return []int{}
+	allPositions := []int{}
+	for _, sequence := range rule.Options {
+		positions := matchSequence(message, sequence, rules)
+		allPositions = append(allPositions, positions...)
+		allPositions = reverseSortAndDedup(allPositions)
+	}
+
+	return allPositions
+}
+
+func matchSequence(message []byte, sequence []string, rules map[string]Rule) []int {
+	positions := []int{0}
+
+	for _, ruleName := range sequence {
+		newPositions := []int{}
+		for _, pos := range positions {
+			lengths := matchLengths(message[pos:], ruleName, rules)
+			for _, length := range lengths {
+				newPositions = append(newPositions, length+pos)
+			}
+		}
+		if len(newPositions) == 0 {
+			return []int{}
+		}
+		newPositions = reverseSortAndDedup(newPositions)
+		positions = newPositions
+	}
+
+	return positions
+}
+
+func containsInt(s []int, v int) bool {
+	for _, t := range s {
+		if t == v {
+			return true
+		}
+	}
+	return false
+}
+
+func reverseSortAndDedup(s []int) []int {
+	if len(s) == 0 {
+		return s
+	}
+	// Sort in descending order
+	sort.Sort(sort.Reverse(sort.IntSlice(s)))
+
+	// Remove duplicates
+	prev := s[0]
+	dedup := []int{prev}
+	for i := 1; i < len(s); i++ {
+		v := s[i]
+		if v != prev {
+			dedup = append(dedup, v)
+			prev = v
+		}
+	}
+
+	return s
 }
 
 type Rule struct {
