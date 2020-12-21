@@ -24,3 +24,4 @@
 - [Day 18: Operation Order](https://adventofcode.com/2020/day/18) - [part 1](day18_p1), [part 2](day18_p2)
 - [Day 19: Monster Messages](https://adventofcode.com/2020/day/19) - [part 1](day19_p1), [part 2](day19_p2)
 - [Day 20: Jurassic Jigsaw](https://adventofcode.com/2020/day/20) - [part 1](day20_p1), [part 2](day20_p2)
+- [Day 21: Allergen Assessment](https://adventofcode.com/2020/day/21) - [part 1](day21_p1), [part 2](day21_p2)
