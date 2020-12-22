@@ -1,8 +1,11 @@
 package main
 
 import (
+	"os"
 	"strings"
 	"testing"
+
+	"github.com/devries/advent_of_code_2020/utils"
 )
 
 var testInput = `Player 1:
@@ -34,5 +37,22 @@ func TestProblem(t *testing.T) {
 	expected := int64(291)
 	if score != expected {
 		t.Errorf("expected %d, got %d", expected, score)
+	}
+}
+
+func BenchmarkProgram(b *testing.B) {
+	f, err := os.Open("input.txt")
+	utils.Check(err, "error opening input")
+	defer f.Close()
+
+	daorig, dborig := parseInput(f)
+
+	for n := 0; n < b.N; n++ {
+		da := make(Deck, len(*daorig))
+		copy(da, *daorig)
+		db := make(Deck, len(*dborig))
+		copy(db, *dborig)
+
+		playGame(&da, &db)
 	}
 }

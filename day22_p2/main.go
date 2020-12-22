@@ -58,6 +58,13 @@ func (d *Deck) Hash() string {
 	return fmt.Sprintf("%x", h.Sum(nil))
 }
 
+func hashDecks(da *Deck, db *Deck) string {
+	deckRep := fmt.Sprintf("%v%v", *da, *db)
+	h := sha256.New()
+	h.Write([]byte(deckRep))
+	return fmt.Sprintf("%x", h.Sum(nil))
+}
+
 func max(a int64, b int64) int64 {
 	if a > b {
 		return a
@@ -71,14 +78,27 @@ func playGame(da *Deck, db *Deck) int {
 	memory := make(map[string]bool)
 
 	for {
-		// Check if decks have been in game before
-		if memory[da.Hash()] || memory[db.Hash()] {
+		/*
+			 * This is a bug where I only checked if one hand was seen before
+			 *
+				// Check if decks have been in game before
+				if memory[da.Hash()] || memory[db.Hash()] {
+					return 1
+				}
+
+				// Remember cards
+				memory[da.Hash()] = true
+				memory[db.Hash()] = true
+		*/
+
+		// Check if that exact configuration of hands has been played
+		state := hashDecks(da, db)
+		if memory[state] {
 			return 1
 		}
 
-		// Remember cars
-		memory[da.Hash()] = true
-		memory[db.Hash()] = true
+		// Remember this configuration
+		memory[state] = true
 
 		// Play a round
 		e := playRound(da, db)
