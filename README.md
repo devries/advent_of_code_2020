@@ -26,3 +26,4 @@
 - [Day 20: Jurassic Jigsaw](https://adventofcode.com/2020/day/20) - [part 1](day20_p1), [part 2](day20_p2)
 - [Day 21: Allergen Assessment](https://adventofcode.com/2020/day/21) - [part 1](day21_p1), [part 2](day21_p2)
 - [Day 22: Crab Combat](https://adventofcode.com/2020/day/22) - [part 1](day22_p1), [part 2](day22_p2)
+- [Day 23: Crab Cups](https://adventofcode.com/2020/day/23) - [part 1](day23_p1), [part 2](day23_p2)
