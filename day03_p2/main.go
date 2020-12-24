@@ -42,7 +42,7 @@ func main() {
 	for i, s := range slopes {
 		treecounts[i] = checkSlope(s, grid)
 	}
-	fmt.Println(treecounts)
+	// fmt.Println(treecounts)
 
 	ans := 1
 	for _, c := range treecounts {

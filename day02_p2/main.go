@@ -27,7 +27,7 @@ func main() {
 	err = scanner.Err()
 	utils.Check(err, "error reading input.txt")
 
-	fmt.Printf("Answer: %d\n", validPasswords)
+	fmt.Println(validPasswords)
 }
 
 func validPassword(entry string) (bool, error) {

@@ -28,7 +28,7 @@ func main() {
 
 	out := findSum(numbers, 2020)
 	ans := out[0] * out[1]
-	fmt.Printf("Answer: %d\n", ans)
+	fmt.Println(ans)
 }
 
 func findSum(numbers []int, total int) []int {

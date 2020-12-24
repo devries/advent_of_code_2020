@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/devries/advent_of_code_2020/utils"
+	"github.com/spf13/pflag"
 )
 
 const (
@@ -20,6 +21,8 @@ const (
 	BottomRev
 	LeftRev
 )
+
+var visualizer = pflag.BoolP("visualize", "v", false, "enable visualization")
 
 var monster = `                  # 
 #    ##    ##    ###
@@ -36,6 +39,7 @@ type Tile struct {
 type Transform func(map[utils.Point]rune, int, int) map[utils.Point]rune
 
 func main() {
+	pflag.Parse()
 	f, err := os.Open("input.txt")
 	utils.Check(err, "error opening file")
 	defer f.Close()
@@ -239,8 +243,10 @@ func main() {
 	for _, f := range []Transform{rotateRight, rotateRight, rotateRight, flipPhoto, rotateRight, rotateRight, rotateRight, rotateRight} {
 		found := findMonsterInPhoto(fullPhoto, monsterImage, width, height)
 		if found != 0 {
-			highlightMonsterInPhoto(fullPhoto, monsterImage, width, height)
-			printPhoto(fullPhoto)
+			if *visualizer {
+				highlightMonsterInPhoto(fullPhoto, monsterImage, width, height)
+				printPhoto(fullPhoto)
+			}
 			fmt.Println(hashesInImage - found*hashesInMonster)
 			break
 		}
