@@ -19,12 +19,12 @@ type Element struct {
 
 type Ring struct {
 	Current *Element
-	Locator map[int]*Element
+	Locator []*Element
 }
 
 func NewRing(vals []int) *Ring {
 	r := new(Ring)
-	r.Locator = make(map[int]*Element)
+	r.Locator = make([]*Element, 1000001)
 
 	var p *Element
 	for _, v := range vals {
