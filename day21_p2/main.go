@@ -8,7 +8,10 @@ import (
 	"strings"
 
 	"github.com/devries/advent_of_code_2020/utils"
+	"github.com/spf13/pflag"
 )
+
+var verbose = pflag.BoolP("verbose", "v", false, "verbose output")
 
 type Ingredients map[string]bool
 
@@ -18,6 +21,7 @@ type Label struct {
 }
 
 func main() {
+	pflag.Parse()
 	f, err := os.Open("input.txt")
 	utils.Check(err, "error opening file")
 	defer f.Close()
@@ -47,7 +51,7 @@ func main() {
 	}
 
 	allergenList := []string{}
-	for k, _ := range possibilities {
+	for k := range possibilities {
 		allergenList = append(allergenList, k)
 	}
 
@@ -56,8 +60,12 @@ func main() {
 	allergicIngredients := []string{}
 
 	for _, allergen := range allergenList {
+		if *verbose {
+			fmt.Printf("%s contains %s\n", strings.Join(possibilities[allergen].get(), ", "), allergen)
+		}
 		allergicIngredients = append(allergicIngredients, possibilities[allergen].get()[0])
 	}
+
 	fmt.Println(strings.Join(allergicIngredients, ","))
 }
 
@@ -68,7 +76,7 @@ func reduceAllergens(possibilities map[string]Ingredients) bool {
 		if len(ing) == 1 {
 			// Get the only possibility
 			var cause string
-			for k, _ := range ing {
+			for k := range ing {
 				cause = k
 			}
 			for otherAllergen, otherIng := range possibilities {
