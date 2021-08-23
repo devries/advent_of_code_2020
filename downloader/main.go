@@ -20,9 +20,15 @@ func main() {
 	now := time.Now()
 	year := pflag.IntP("year", "y", now.Year(), "Advent of Code Year")
 	day := pflag.IntP("day", "d", now.Day(), "Advent of Code Day")
+	help_flag := pflag.BoolP("help", "h", false, "show help")
 
 	pflag.Usage = myUsage
 	pflag.Parse()
+
+	if *help_flag {
+		myUsage()
+		os.Exit(0)
+	}
 
 	cookie := os.Getenv("AOC_SESSION")
 
