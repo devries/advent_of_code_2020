@@ -22,7 +22,11 @@ func main() {
 	defer f.Close()
 
 	labels := parseInput(f)
+	sum := solve(labels)
+	fmt.Println(sum)
+}
 
+func solve(labels []Label) int {
 	allIngredients := make(Ingredients)
 	possibilities := make(map[string]Ingredients)
 
@@ -53,13 +57,13 @@ func main() {
 
 	sum := 0
 	for _, label := range labels {
-		for k, _ := range label.Contents {
+		for k := range label.Contents {
 			if !allAllergens.contains(k) {
 				sum++
 			}
 		}
 	}
-	fmt.Println(sum)
+	return sum
 }
 
 func reduceAllergens(possibilities map[string]Ingredients) bool {
@@ -69,7 +73,7 @@ func reduceAllergens(possibilities map[string]Ingredients) bool {
 		if len(ing) == 1 {
 			// Get the only possibility
 			var cause string
-			for k, _ := range ing {
+			for k := range ing {
 				cause = k
 			}
 			for otherAllergen, otherIng := range possibilities {

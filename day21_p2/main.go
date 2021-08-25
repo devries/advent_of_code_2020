@@ -27,7 +27,11 @@ func main() {
 	defer f.Close()
 
 	labels := parseInput(f)
+	solution := solve(labels)
+	fmt.Println(solution)
+}
 
+func solve(labels []Label) string {
 	allIngredients := make(Ingredients)
 	possibilities := make(map[string]Ingredients)
 
@@ -66,7 +70,7 @@ func main() {
 		allergicIngredients = append(allergicIngredients, possibilities[allergen].get()[0])
 	}
 
-	fmt.Println(strings.Join(allergicIngredients, ","))
+	return strings.Join(allergicIngredients, ",")
 }
 
 func reduceAllergens(possibilities map[string]Ingredients) bool {
