@@ -2,6 +2,7 @@
 
 [![Tests](https://github.com/devries/advent_of_code_2020/actions/workflows/main.yml/badge.svg)](https://github.com/devries/advent_of_code_2020/actions/workflows/main.yml)
 [![Go Report Card](https://goreportcard.com/badge/github.com/devries/advent_of_code_2020)](https://goreportcard.com/report/github.com/devries/advent_of_code_2020)
+![stars: 50](https://img.shields.io/badge/stars%20⭐-50-yellow)
 
 ## Summary
 
